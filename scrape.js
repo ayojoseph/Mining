@@ -1,10 +1,19 @@
-const request = require("request");
+// const request = require("request");
+const rp = require("request-promise");
 const cheerio = require("cheerio");
 
 //getting names from file and stuffing into array
 const fs = require("fs");
-var fstream = fs.readFileSync("output.txt").toString();
-var names = fstream.split("\n");
+// var fstream = fs.readFileSync("output.txt").toString();
+var fstream = fs.readFileSync("links.txt").toString();
+// var names = fstream.split("\n");
+
+var links = fstream.split("\n");
+
+console.log(links);
+
+
+
 
 
 //used to generate weblinks
