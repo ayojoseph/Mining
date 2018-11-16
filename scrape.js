@@ -11,12 +11,14 @@ var fstream = fs.readFileSync("links.txt").toString();
 const links = fstream.split("\n");
 
 const count = 0;
-
+var dbFile = fs.createWriteStream('db.txt', {
+      flags: 'a' // 'a' means appending (old data will be preserved)
+    });
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function makeRequest(addresses) {
-    for(var i = 0; i < 50; i++) {
+    for(var i = 0; i < 200; i++) {
         const result = await rp(addresses[i]);
         await delay(500);
         const $ = await cheerio.load(result);
@@ -25,22 +27,22 @@ async function makeRequest(addresses) {
 
 
     //Extracting Info from Page
-    var name = $("h2"); //.text Good
+    var name = $("h2").text(); //.text Good
     // console.log(name.text());
 
-    const aLocation = $(".w2dc-location");
-    console.log(aLocation.text());
+    const aContact = $(".w2dc-fields-group");
 
-
-
+    var contact = aContact.text().replace(/\s+/g, ' '); //parses out text well
+    console.log("** "+name+" **" + " "+contact);
+    dbFile.write("** "+name+" **" + " "+contact+"\n");
 
     }
 
-    // const result = await rp(address);
 
 }
 
 makeRequest(links);
+// dbFile.close();
 
 // for ( var i = 0; i < 20; i++) {
 //     setTimeout( function(i) {
