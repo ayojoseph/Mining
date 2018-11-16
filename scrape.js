@@ -8,9 +8,65 @@ const fs = require("fs");
 var fstream = fs.readFileSync("links.txt").toString();
 // var names = fstream.split("\n");
 
-var links = fstream.split("\n");
+const links = fstream.split("\n");
 
-console.log(links);
+const count = 0;
+
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function makeRequest(addresses) {
+    for(var i = 0; i < 50; i++) {
+        const result = await rp(addresses[i]);
+        await delay(500);
+        const $ = await cheerio.load(result);
+
+    // var name = $(".w2dc-listing-header");
+
+
+    //Extracting Info from Page
+    var name = $("h2"); //.text Good
+    // console.log(name.text());
+
+    const aLocation = $(".w2dc-location");
+    console.log(aLocation.text());
+
+
+
+
+    }
+
+    // const result = await rp(address);
+
+}
+
+makeRequest(links);
+
+// for ( var i = 0; i < 20; i++) {
+//     setTimeout( function(i) {
+        
+//     }, 10000);
+    
+// }
+
+
+
+
+// request(links, function(responses) {
+
+//     var test = responses[links[55]];
+
+//     console.log(test);
+// });
+
+// async function makeCalls(links) {
+    
+// }
+
+// console.log(links);
+
+
+
 
 
 
